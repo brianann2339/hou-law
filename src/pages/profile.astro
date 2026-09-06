@@ -60,6 +60,23 @@ const personLd = {
         <p style="margin-top:1rem">
           <a class="card__link" href={u('/services/')}>各領域的詳細說明 →</a>
         </p>
+
+        {lawyer.media.length > 0 && (
+          <>
+            <h3 class="sub-h">媒體報導與受訪</h3>
+            <ul class="media">
+              {lawyer.media.map((m) => (
+                <li>
+                  <span class="media__meta">{m.date}　{m.outlet}</span>
+                  <a class="media__title" href={m.url} target="_blank" rel="noopener noreferrer">
+                    {m.title}<span aria-hidden="true"> ↗</span>
+                  </a>
+                  {m.note && <span class="media__note">{m.note}</span>}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
 
       <aside class="profile-side">
@@ -163,6 +180,22 @@ const personLd = {
 
   .profile-para { margin-bottom: 1.4rem; color: var(--ink-2); }
   .sub-h { font-size: 1rem; letter-spacing: 0.14em; margin: 2.4rem 0 1rem; }
+
+  .media { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
+  .media li {
+    display: grid; gap: 0.2rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .media li:first-child { border-top: 1px solid var(--line-soft); }
+  .media__meta { font-size: 0.76rem; letter-spacing: 0.14em; color: var(--ink-3); }
+  .media__title {
+    font-family: var(--serif); font-size: 1rem; letter-spacing: 0.04em;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .media__title:hover, .media__title:focus-visible { border-bottom-color: var(--accent); }
+  .media__note { font-size: 0.84rem; color: var(--ink-3); }
 
   .profile-side {
     background: var(--paper-2);

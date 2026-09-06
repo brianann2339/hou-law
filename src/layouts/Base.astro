@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { firm, lawyer, office } from '../content/site';
+import { firm, lawyer, office, siteVerification } from '../content/site';
 
 interface Props {
   title: string;
@@ -58,6 +58,12 @@ const orgLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+
+    {/* 站長工具驗證。填了 src/content/site.ts 的 siteVerification 才會輸出。 */}
+    {siteVerification.google && (
+      <meta name="google-site-verification" content={siteVerification.google} />
+    )}
+    {siteVerification.bing && <meta name="msvalidate.01" content={siteVerification.bing} />}
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="zh_TW" />

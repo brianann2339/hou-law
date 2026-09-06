@@ -51,6 +51,41 @@ npm run preview
 推 `main` 由 GitHub Actions 自動建置發布到 GitHub Pages。
 換自訂網域要改三處：`astro.config.mjs` 的 `site`／`base`、`public/robots.txt` 的 Sitemap 行、`public/CNAME`。
 
+
+## 提交給搜尋引擎（第一次上線後做一次）
+
+目前搜「事務所名稱」還找不到本站，要主動提交。兩個平台都做，各約 5 分鐘。
+
+### Google Search Console
+1. 開 <https://search.google.com/search-console>，用 Google 帳號登入。
+2. 左上角「新增資源」→ 選右邊那個 **「網址前置字元」**（不是左邊的「網域」）。
+3. 貼上：`https://brianann2339.github.io/hou-law/`
+4. 驗證方式選 **「HTML 標記」**，它會給一段
+   `<meta name="google-site-verification" content="AbCd1234..." />`。
+   **把 content 引號裡那一串**複製下來。
+5. 打開 `src/content/site.ts`，填進 `siteVerification.google`，推 `main`，等 Actions 跑完（約 1 分鐘）。
+6. 回 Search Console 按「驗證」。
+7. 通過後，左側「Sitemap」→ 輸入 `sitemap-index.xml` → 提交。
+
+### Bing Webmaster Tools
+開 <https://www.bing.com/webmasters>，登入後可直接選 **「從 Google Search Console 匯入」**，
+最省事。要手動的話流程同上，驗證碼填進 `siteVerification.bing`，sitemap 網址是
+`https://brianann2339.github.io/hou-law/sitemap-index.xml`。
+
+> 收錄不是即時的，通常幾天到兩週。Search Console 的「網址審查」可以看單一頁面有沒有被收錄。
+
+## 商家檔案（Google／Apple／Bing 地圖）
+
+事務所周邊至少 10 家同業在 Apple 地圖有商家標記，本所目前三個平台都查無。建議各建一筆
+（**兩所各自建，不要合併成一筆**）：
+
+- Google 商家：<https://business.google.com/> — 類別選「律師事務所」，名稱、地址、電話、營業時間、網址與本站一致。
+- Apple Business Connect：<https://businessconnect.apple.com/>
+- Bing Places：<https://www.bingplaces.com/>
+
+⚠️ 一旦 Google 上有了商家檔案，第三方目錄站（如台律網）會自動抓走並生成頁面，內容不受本所控制。
+評價只能邀請，**不得給予任何對價**（推展業務規範 §5 III 的邏輯）。
+
 ## 與 tsai-law 的關係
 
 兩個 repo 是**同一套模板、兩份內容**。除了 `src/content/site.ts`、`astro.config.mjs`、
