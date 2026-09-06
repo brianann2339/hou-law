@@ -1,0 +1,47 @@
+---
+import { u, telHref } from '../lib/paths';
+import { firm, lawyer, office, peer } from '../content/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      {/* 推展業務規範 §2 III：律師姓名、事務所名稱、地址、電話——四項不可移除 */}
+      <div>
+        <h3>{firm.name}</h3>
+        <p>{lawyer.name}{lawyer.role}</p>
+        <p><a href={telHref(lawyer.tel)}>{lawyer.tel}</a></p>
+        <p><a href={`mailto:${lawyer.email}`}>{lawyer.email}</a></p>
+        <p>律師證書字號　{lawyer.licenseNo}</p>
+      </div>
+
+      <div>
+        <h3>事務所位置</h3>
+        <p>{office.addressFull}</p>
+        <p>傳真　{lawyer.fax}</p>
+        <p>{office.hours}</p>
+        <p class="footer-more"><a href={u('/contact/')}>交通與聯絡方式 →</a></p>
+      </div>
+
+      <div>
+        <h3>合署事務所</h3>
+        <p>{peer.firmName}</p>
+        <p class="footer-dim">{peer.areas}</p>
+        <p class="footer-more"><a href={peer.url}>前往{peer.firmName} ↗</a></p>
+      </div>
+    </div>
+
+    <p class="footer-note">
+      {office.disclaimer}<br />
+      本網站所載內容僅為事務所與律師之基本資訊，不構成個案之法律意見，亦不因瀏覽本網站或來信而成立委任關係。個案處理方式請以正式面談與委任契約為準。<br />
+      內容最後更新：{firm.lastUpdated}　·　© {year}　{firm.name}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer-grid p { margin: 0.15rem 0; }
+  .footer-more { margin-top: 1rem !important; }
+  .footer-dim { color: rgba(247, 244, 237, 0.55); font-size: 0.82rem; }
+</style>

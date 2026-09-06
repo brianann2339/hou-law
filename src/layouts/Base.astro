@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { firm, lawyer, office } from '../content/site';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: string;
+  jsonLd?: unknown;
+}
+const { title, description, current, jsonLd } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const fullTitle = `${title}｜${firm.name}`;
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Attorney',
+  name: firm.name,
+  url: new URL(import.meta.env.BASE_URL, Astro.site).href,
+  telephone: lawyer.tel,
+  faxNumber: lawyer.fax,
+  email: lawyer.email,
+  areaServed: office.city,
+  knowsLanguage: lawyer.languages,
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'TW',
+    addressRegion: '臺南市',
+    addressLocality: '中西區',
+    streetAddress: '府前路一段188號',
+    postalCode: '700',
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '17:00',
+  },
+  employee: {
+    '@type': 'Person',
+    name: `${lawyer.name}${lawyer.role}`,
+    jobTitle: '律師',
+    knowsLanguage: lawyer.languages,
+    alumniOf: lawyer.education.map((e) => ({ '@type': 'EducationalOrganization', name: e })),
+    memberOf: { '@type': 'Organization', name: lawyer.bar },
+  },
+};
+---
+
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:site_name" content={firm.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;600;700&display=swap"
+    />
+
+    {/* 結構化資料。必須用 <Fragment set:html>——寫成 <set:html value={…} /> 會被當成未知
+        元素輸出成 <set :html="…">，搜尋引擎讀不到（2026-09-07 修正的實際 bug）。 */}
+    <Fragment set:html={`<script type="application/ld+json">${JSON.stringify(orgLd)}</script>`} />
+    {jsonLd && <Fragment set:html={`<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`} />}
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要內容</a>
+    <Header current={current} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

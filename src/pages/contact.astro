@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import { telHref } from '../lib/paths';
+import { firm, lawyer, office, peer } from '../content/site';
+
+const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(office.mapQuery)}&output=embed&hl=zh-TW`;
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.mapQuery)}`;
+---
+
+<Base
+  title="聯絡與交通"
+  description={`${firm.name} ${lawyer.tel}。地址：${office.addressFull}。服務時間 ${office.hours}。初次諮詢不收費，可電話或視訊。`}
+  current="contact"
+>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="hero__eyebrow">Contact</p>
+      <h1 class="page-hero__title">聯絡與交通</h1>
+      <p class="page-hero__lede">
+        初次諮詢不收費，電話上也可以先談。開庭日律師可能不在事務所，來訪前建議先來電。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="contact-card">
+        <h2>{firm.name}</h2>
+        <p class="contact-card__who">{lawyer.name}{lawyer.role}</p>
+        <dl class="dl">
+          <div><dt>電話</dt><dd><a href={telHref(lawyer.tel)}>{lawyer.tel}</a></dd></div>
+          <div><dt>傳真</dt><dd>{lawyer.fax}</dd></div>
+          <div><dt>電子郵件</dt><dd><a href={`mailto:${lawyer.email}`}>{lawyer.email}</a></dd></div>
+          <div><dt>地址</dt><dd>{office.addressFull}</dd></div>
+          <div><dt>服務時間</dt><dd>{office.hours}</dd></div>
+          <div><dt>初次諮詢</dt><dd>不收費，可來所面談、電話或視訊</dd></div>
+          <div><dt>視訊工具</dt><dd>{office.videoTools.join('／')}</dd></div>
+          <div><dt>語言</dt><dd>{lawyer.languages.join('、')}</dd></div>
+          <div><dt>律師證書</dt><dd>{lawyer.licenseNo}</dd></div>
+        </dl>
+        <div class="contact-card__actions">
+          <a class="btn btn--solid" href={telHref(lawyer.tel)}>撥打電話</a>
+          <a class="btn" href={`mailto:${lawyer.email}`}>寄送郵件</a>
+        </div>
+        <p class="mail-note">
+          來信僅供初步聯繫，未經面談與委任契約不成立委任關係，請勿先傳送機密資料。
+        </p>
+      </div>
+
+      <div class="tips">
+        <h3>來電之前</h3>
+        <ul>
+          <li>{office.callback}</li>
+          <li>初次諮詢不收費；委任後的律師酬金採收費制，面談時說明並於委任契約載明。</li>
+          <li>視訊諮詢請先來電或來信約時間，建議在安靜、不會被他人聽到的地方連線；本所不會錄影或錄音，如有需要會事先徵得您的同意。</li>
+          <li>初次來訪建議先來電確認律師在所——開庭日律師可能不在事務所，直接前來不一定見得到人。</li>
+        </ul>
+      </div>
+
+      <p class="notice" style="margin-top:2.6rem">
+        {office.disclaimer}
+        若您的問題屬於{peer.areas}，也可以直接聯繫
+        <a href={peer.url}>{peer.firmName}</a>。
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <p class="eyebrow">Location</p>
+      <h2 class="section-title">怎麼來</h2>
+      <div class="rule"></div>
+      <div class="map-grid">
+        <div class="map-frame">
+          <iframe
+            src={mapEmbed}
+            title={`${office.addressShort} 地圖`}
+            width="600"
+            height="450"
+            style="border:0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div>
+          <dl class="dl">
+            <div><dt>地址</dt><dd>{office.addressFull}</dd></div>
+            <div><dt>服務時間</dt><dd>{office.hours}</dd></div>
+          </dl>
+          <p class="map-note">{office.hoursNote}</p>
+          <p style="margin-top:1.4rem">
+            <a class="btn" href={mapLink} target="_blank" rel="noopener noreferrer">在 Google 地圖開啟</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact-card {
+    background: var(--paper-2);
+    border: 1px solid var(--line-soft);
+    padding: 2rem;
+    max-width: 44em;
+  }
+  .contact-card h2 { font-size: 1.35rem; letter-spacing: 0.12em; }
+  .contact-card__who {
+    font-size: 0.82rem; letter-spacing: 0.18em; color: var(--ink-3);
+    margin: 0.35rem 0 1.4rem;
+  }
+  .contact-card__actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
+  .mail-note {
+    margin: 1.1rem 0 0; font-size: 0.8rem; line-height: 1.85; color: var(--ink-3);
+  }
+
+  .tips { margin-top: 2.6rem; max-width: 44em; }
+  .tips h3 { font-size: 0.82rem; letter-spacing: 0.24em; color: var(--accent); margin-bottom: 0.9rem; }
+  .tips ul { margin: 0; padding-left: 1.2rem; color: var(--ink-2); font-size: 0.93rem; }
+  .tips li { margin-bottom: 0.6rem; }
+
+  .map-grid { display: grid; gap: 2.4rem; align-items: start; }
+  @media (min-width: 900px) { .map-grid { grid-template-columns: 1.3fr 1fr; gap: 3rem; } }
+  .map-frame {
+    position: relative; aspect-ratio: 4 / 3;
+    border: 1px solid var(--line); overflow: hidden;
+  }
+  .map-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .map-note { margin-top: 1.2rem; color: var(--ink-2); font-size: 0.92rem; }
+</style>

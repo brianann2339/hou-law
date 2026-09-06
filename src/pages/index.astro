@@ -1,0 +1,187 @@
+---
+import Base from '../layouts/Base.astro';
+import { u, telHref } from '../lib/paths';
+import { firm, lawyer, office, peer, consultSteps } from '../content/site';
+
+const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
+---
+
+<Base
+  title="臺南律師"
+  description={`${firm.name}，位於臺南市中西區府前路一段188號。${lawyer.name}律師曾任臺灣臺東地方法院、臺灣臺南地方法院法官與庭長，審判工作三十四年。初次諮詢不收費，可電話或視訊。`}
+  current="home"
+>
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <p class="hero__eyebrow">臺南 · 中西區府前路</p>
+      <h1 class="hero__title" aria-label={`${lawyer.name}律師`}>
+        <span>{lawyer.name}</span><em>律師</em>
+      </h1>
+      <p class="hero__lede">{lawyer.tagline}</p>
+      <div class="hero__actions">
+        <a class="btn btn--onDeep" href={telHref(lawyer.tel)}>致電 {lawyer.tel}</a>
+        <a class="btn btn--onDeep" href={`mailto:${lawyer.email}`}>來信洽詢</a>
+      </div>
+      <dl class="hero__meta">
+        <div><dt>地址</dt><dd>{office.addressFull}</dd></div>
+        <div><dt>服務時間</dt><dd>{office.hours}</dd></div>
+        <div><dt>初次諮詢</dt><dd>不收費，可電話或視訊</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap intro-grid">
+      <div class="intro-portrait">
+        {photoSrc
+          ? <img src={photoSrc} alt={`${lawyer.name}律師`} width="480" height="600" />
+          : <div class="portrait-placeholder" aria-hidden="true"><span>{lawyer.name}</span><small>照片預留位置</small></div>}
+      </div>
+      <div>
+        <p class="eyebrow">Attorney</p>
+        <h2 class="section-title">關於{lawyer.name}律師</h2>
+        <div class="rule"></div>
+        {lawyer.intro.map((p) => <p class="intro-para">{p}</p>)}
+        <ul class="tags" style="margin-top:1.4rem">
+          {lawyer.practiceAreas.map((a) => <li>{a}</li>)}
+        </ul>
+        <p style="margin-top:1.6rem">
+          <a class="card__link" href={u('/profile/')}>完整介紹與執業資格 →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--deep">
+    <div class="wrap">
+      <p class="eyebrow">Process</p>
+      <h2 class="section-title">從第一通電話到委任</h2>
+      <div class="rule"></div>
+      <ol class="steps">
+        {consultSteps.map((s) => (
+          <li>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))}
+      </ol>
+      <p style="margin-top:2.4rem">
+        <a class="btn btn--onDeep" href={u('/consult/')}>委任流程與常見問題</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap contact-strip">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 class="section-title">來一趟府前路</h2>
+        <div class="rule"></div>
+        <p class="lede">
+          {office.addressFull}<br />
+          {office.hours}　{office.hoursNote}<br />
+          {office.callback}
+        </p>
+      </div>
+      <div class="contact-strip__actions">
+        <a class="btn btn--solid" href={u('/contact/')}>聯絡方式與交通</a>
+        <a
+          class="btn"
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.mapQuery)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >在 Google 地圖開啟</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <p class="notice">
+        {office.disclaimer}
+        若您的問題屬於{peer.areas}，也可以直接聯繫
+        <a href={peer.url}>{peer.firmName}</a>。
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background: linear-gradient(160deg, var(--deep) 0%, #0f241f 100%);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: auto -10% -40% auto;
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(201, 168, 112, 0.13), transparent 62%);
+    pointer-events: none;
+  }
+  .hero__inner { position: relative; padding-block: clamp(4rem, 12vw, 8rem); }
+  .hero__eyebrow { margin-bottom: 2rem; }
+  .hero__title {
+    font-size: clamp(2.6rem, 9vw, 5rem);
+    letter-spacing: 0.12em;
+    line-height: 1.25;
+    font-weight: 500;
+    margin-bottom: 1.6rem;
+  }
+  .hero__title em {
+    font-style: normal;
+    font-size: 0.3em;
+    letter-spacing: 0.3em;
+    color: var(--accent-soft);
+    margin-left: 0.5em;
+    vertical-align: 0.4em;
+  }
+  .hero__lede {
+    color: rgba(247, 244, 237, 0.82);
+    max-width: 34em;
+    margin-bottom: 2.6rem;
+    font-size: 1.05rem;
+  }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.2rem; }
+  .hero__meta {
+    display: flex; flex-wrap: wrap; gap: 0 3rem; margin: 0;
+    padding-top: 1.8rem; border-top: 1px solid rgba(247, 244, 237, 0.16);
+  }
+  .hero__meta div { display: flex; gap: 1rem; align-items: baseline; padding-block: 0.35rem; }
+  .hero__meta dt {
+    font-size: 0.72rem; letter-spacing: 0.22em;
+    color: var(--accent-soft); margin: 0; white-space: nowrap;
+  }
+  .hero__meta dd { margin: 0; font-size: 0.92rem; color: rgba(247, 244, 237, 0.85); }
+
+  .intro-grid { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 860px) { .intro-grid { grid-template-columns: 280px 1fr; gap: 3.5rem; } }
+  .intro-portrait img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+  .portrait-placeholder {
+    aspect-ratio: 4 / 5;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.7rem;
+    background: linear-gradient(150deg, var(--deep), var(--deep-2));
+    color: var(--accent-soft);
+  }
+  .portrait-placeholder span {
+    font-family: var(--serif); font-size: 2.2rem;
+    letter-spacing: 0.3em; text-indent: 0.3em;
+  }
+  .portrait-placeholder small { font-size: 0.68rem; letter-spacing: 0.2em; opacity: 0.55; }
+  .intro-para { margin-bottom: 1.3rem; color: var(--ink-2); }
+
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.6rem; }
+  .steps h3 {
+    font-size: 1.05rem; letter-spacing: 0.12em;
+    color: var(--accent-soft); margin-bottom: 0.5rem;
+  }
+  .steps p { color: rgba(247, 244, 237, 0.78); font-size: 0.95rem; max-width: 48em; }
+  @media (min-width: 900px) { .steps { grid-template-columns: repeat(2, 1fr); gap: 2.4rem 3rem; } }
+
+  .contact-strip { display: grid; gap: 2.4rem; align-items: end; }
+  .contact-strip__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+  @media (min-width: 900px) { .contact-strip { grid-template-columns: 1.4fr 1fr; } }
+</style>

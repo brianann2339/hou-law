@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brianann2339.github.io/hou-law/sitemap-index.xml

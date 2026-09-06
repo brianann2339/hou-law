@@ -1,0 +1,60 @@
+---
+import { u, telHref } from '../lib/paths';
+import { firm, lawyer, peer } from '../content/site';
+
+interface Props { current?: string }
+const { current } = Astro.props;
+
+const links = [
+  { href: '/', label: '首頁', key: 'home' },
+  { href: '/profile/', label: `${lawyer.name}律師`, key: 'profile' },
+  { href: '/services/', label: '服務範圍', key: 'services' },
+  { href: '/consult/', label: '委任流程', key: 'consult' },
+  { href: '/contact/', label: '聯絡我們', key: 'contact' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href={u('/')}>
+      <span class="brand__names">{firm.name}</span>
+      <span class="brand__sub">TAINAN · 府前路</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">選單</button>
+
+    <nav class="nav" id="site-nav" aria-label="主要導覽">
+      {links.map((l) => (
+        <a href={u(l.href)} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
+      ))}
+      <a class="nav__peer" href={peer.url}>{peer.firmName}<span aria-hidden="true"> ↗</span></a>
+      <a class="nav__tel" href={telHref(lawyer.tel)}>{lawyer.tel}</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .brand__names, .brand__sub { display: block; }
+  .nav__peer { color: var(--ink-3) !important; font-size: 0.82rem !important; }
+</style>
+
+<script>
+  const btn = document.querySelector('.nav-toggle') as HTMLButtonElement | null;
+  const nav = document.querySelector('#site-nav') as HTMLElement | null;
+  const mq = window.matchMedia('(max-width: 860px)');
+
+  function sync() {
+    if (!nav || !btn) return;
+    nav.hidden = mq.matches && btn.getAttribute('aria-expanded') !== 'true';
+  }
+
+  btn?.addEventListener('click', () => {
+    btn.setAttribute('aria-expanded', btn.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+    sync();
+  });
+  mq.addEventListener('change', () => {
+    btn?.setAttribute('aria-expanded', 'false');
+    sync();
+  });
+  sync();
+</script>

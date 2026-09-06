@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import { u, telHref } from '../lib/paths';
+import { firm, lawyer, office, consultSteps, faqs } from '../content/site';
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Base
+  title="委任流程與常見問題"
+  description={`${firm.name}的委任流程：初次諮詢不收費，可電話或視訊。從第一通電話到簽委任契約的四個步驟，以及費用、回電、視訊等常見問題。`}
+  current="consult"
+  jsonLd={faqLd}
+>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="hero__eyebrow">Process</p>
+      <h1 class="page-hero__title">委任流程</h1>
+      <p class="page-hero__lede">
+        第一次找律師多半是在最慌的時候。這一頁把接下來會發生什麼事先講清楚，讓您知道要準備什麼、要花多少錢。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="quickfacts">
+        <div><dt>初次諮詢</dt><dd>不收費</dd></div>
+        <div><dt>諮詢方式</dt><dd>來所面談、電話、視訊</dd></div>
+        <div><dt>視訊工具</dt><dd>{office.videoTools.join('／')}</dd></div>
+        <div><dt>服務時間</dt><dd>{office.hours}</dd></div>
+      </div>
+
+      <ol class="steps">
+        {consultSteps.map((s, i) => (
+          <li>
+            <span class="steps__num">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h2>{s.title}</h2>
+              <p>{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="callout">
+        <h3>時間是最容易失去的東西</h3>
+        <p>
+          訴訟文書幾乎都附有法定期間——答辯、上訴、抗告、聲明異議、訴願，錯過就不能再補救。
+          如果您手上已經有法院或機關寄來的文書，請先看清楚上面的日期，然後儘早聯繫。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="section-title">常見問題</h2>
+      <div class="rule"></div>
+      <div class="faqs">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--deep section--tight">
+    <div class="wrap cta">
+      <div>
+        <h2 class="section-title" style="margin-bottom:0.6rem">準備好了就打電話</h2>
+        <p class="lede">{office.hours}　{office.hoursNote}<br />{office.callback}</p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--onDeep" href={telHref(lawyer.tel)}>{lawyer.tel}</a>
+        <a class="btn btn--onDeep" href={`mailto:${lawyer.email}`}>寄送郵件</a>
+        <a class="btn btn--onDeep" href={u('/contact/')}>其他聯絡方式</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .quickfacts {
+    display: grid; gap: 0;
+    border: 1px solid var(--line-soft);
+    background: var(--paper-2);
+    margin-bottom: 3rem;
+  }
+  .quickfacts > div {
+    display: grid; grid-template-columns: 7em 1fr; gap: 1rem;
+    padding: 0.85rem 1.3rem;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .quickfacts > div:last-child { border-bottom: 0; }
+  .quickfacts dt { color: var(--ink-3); font-size: 0.8rem; letter-spacing: 0.1em; margin: 0; }
+  .quickfacts dd { margin: 0; font-size: 0.95rem; }
+  @media (min-width: 780px) {
+    .quickfacts { grid-template-columns: 1fr 1fr; }
+    .quickfacts > div:nth-last-child(-n+2) { border-bottom: 0; }
+    .quickfacts > div:nth-child(odd) { border-right: 1px solid var(--line-soft); }
+  }
+
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 2.6rem; }
+  .steps li { display: grid; grid-template-columns: 4rem 1fr; gap: 1.5rem; }
+  .steps__num { font-family: var(--serif); font-size: 1.6rem; color: var(--accent); line-height: 1.2; }
+  .steps h2 { font-size: 1.25rem; letter-spacing: 0.12em; margin-bottom: 0.7rem; }
+  .steps p { color: var(--ink-2); font-size: 0.96rem; max-width: 46em; }
+  @media (max-width: 600px) { .steps li { grid-template-columns: 1fr; gap: 0.4rem; } }
+
+  .callout {
+    margin-top: 3.5rem;
+    border: 1px solid var(--accent);
+    padding: 2rem;
+    background: rgba(156, 116, 64, 0.05);
+  }
+  .callout h3 { font-size: 1.1rem; letter-spacing: 0.12em; margin-bottom: 0.8rem; color: var(--accent); }
+  .callout p { color: var(--ink-2); font-size: 0.95rem; max-width: 46em; margin: 0; }
+
+  .faqs { display: grid; gap: 0; }
+  details { border-bottom: 1px solid var(--line-soft); padding-block: 1.1rem; }
+  details:first-child { border-top: 1px solid var(--line-soft); }
+  summary {
+    cursor: pointer; font-family: var(--serif);
+    font-size: 1.02rem; letter-spacing: 0.06em; list-style: none;
+    display: flex; justify-content: space-between; gap: 1rem; align-items: baseline;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '＋'; color: var(--accent); font-size: 0.9rem; }
+  details[open] summary::after { content: '－'; }
+  details p { margin: 0.9rem 0 0; color: var(--ink-2); font-size: 0.94rem; max-width: 46em; }
+
+  .cta { display: grid; gap: 2rem; align-items: end; }
+  .cta__actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+  @media (min-width: 900px) { .cta { grid-template-columns: 1fr 1fr; } }
+</style>

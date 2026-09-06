@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import { u, telHref } from '../lib/paths';
+import { firm, lawyer, office, peer, serviceGroups } from '../content/site';
+---
+
+<Base
+  title="服務範圍"
+  description={`${firm.name}的服務範圍：${serviceGroups.map((g) => g.title).join('、')}。臺南市中西區府前路一段188號，初次諮詢不收費。`}
+  current="services"
+>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="hero__eyebrow">Practice Areas</p>
+      <h1 class="page-hero__title">服務範圍</h1>
+      <p class="page-hero__lede">
+        以下依案件類型整理，每一項後面都附上一句白話說明——如果哪一句聽起來像您現在的處境，那大概就是您要找的類別。不確定的話，直接來電說明即可，初次諮詢不收費。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="groups">
+        {serviceGroups.map((g) => (
+          <article class="group">
+            <div class="group__head">
+              <h2>{g.title}</h2>
+              <p class="group__body">{g.body}</p>
+            </div>
+            <ul class="items">
+              {g.items.map((it) => (
+                <li>
+                  <span class="term">{it.term}</span>
+                  <span class="plain">{it.plain}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
+    <div class="wrap">
+      <p class="eyebrow">Not listed?</p>
+      <h2 class="section-title">沒有列到您的問題？</h2>
+      <div class="rule"></div>
+      <p class="lede">
+        以上是{lawyer.name}律師主要承辦的類型，不是全部。法律問題常常一開始看起來像 A、談過才發現是 B——初次諮詢不收費，先講講看再說。
+      </p>
+      <p class="lede" style="margin-top:1rem">
+        若您的問題屬於<strong>{peer.areas}</strong>，合署的<a href={peer.url}>{peer.firmName}</a>是更合適的窗口。{office.disclaimer}
+      </p>
+      <div class="cta-row">
+        <a class="btn btn--solid" href={telHref(lawyer.tel)}>致電 {lawyer.tel}</a>
+        <a class="btn" href={u('/consult/')}>委任流程與常見問題</a>
+      </div>
+      <p class="notice" style="margin-top:2.6rem">
+        本頁所列為服務範圍，非個案承諾。依律師業務推展規範，律師不得表示訴訟勝訴率，亦不得公開受任中或過去承辦的個案。個案能不能做、怎麼做，請以面談後的評估與委任契約為準。
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .groups { display: grid; gap: 0; }
+  .group {
+    padding-block: 2.6rem;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid; gap: 1.6rem;
+  }
+  .group:first-child { padding-top: 0; }
+  .group:last-child { border-bottom: 0; }
+  @media (min-width: 900px) { .group { grid-template-columns: 1fr 1.15fr; gap: 3rem; } }
+
+  .group h2 { font-size: 1.45rem; letter-spacing: 0.12em; margin-bottom: 0.9rem; }
+  .group__body { color: var(--ink-2); font-size: 0.95rem; margin: 0; }
+
+  .items { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
+  .items li {
+    display: grid; gap: 0.15rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .items li:last-child { border-bottom: 0; }
+  @media (min-width: 560px) {
+    .items li { grid-template-columns: 9.5em 1fr; gap: 1rem; align-items: baseline; }
+  }
+  .term { font-size: 0.95rem; letter-spacing: 0.04em; }
+  .plain { font-size: 0.88rem; color: var(--ink-3); line-height: 1.75; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+</style>

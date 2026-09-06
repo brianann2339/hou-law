@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/paths';
+---
+
+<Base title="找不到這個頁面" description="您要找的頁面不存在或已移動。">
+  <section class="nf">
+    <div class="wrap">
+      <p class="hero__eyebrow">404</p>
+      <h1>找不到這個頁面</h1>
+      <p class="nf__lede">您輸入的網址可能有誤，或該頁面已經移動。</p>
+      <div class="nf__actions">
+        <a class="btn btn--onDeep" href={u('/')}>回首頁</a>
+        <a class="btn btn--onDeep" href={u('/contact/')}>聯絡我們</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    background: linear-gradient(160deg, var(--deep) 0%, #0f241f 100%);
+    color: var(--paper);
+    padding-block: clamp(5rem, 14vw, 9rem);
+  }
+  .nf h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); letter-spacing: 0.14em; margin-bottom: 1.2rem; }
+  .nf__lede { color: rgba(247, 244, 237, 0.78); margin-bottom: 2.4rem; }
+  .nf__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+</style>
