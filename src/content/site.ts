@@ -41,7 +41,7 @@ export const firm = {
  * 取得方式見 README「提交給搜尋引擎」；只要貼 content="..." 裡面那串即可。
  */
 export const siteVerification = {
-  google: '', // Search Console →「HTML 標記」給的 content 值
+  google: 'z9Oqz_ZatY5FOe1Uk2-7pk9zyFW01yl94YoX3nyf8mA', // Search Console →「HTML 標記」給的 content 值
   bing: '',   // Bing Webmaster Tools →「Meta tag」給的 content 值
 };
 
