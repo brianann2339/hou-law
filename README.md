@@ -19,10 +19,24 @@
 | 頁尾「內容最後更新」 | `firm.lastUpdated`（手動維護，改內容時一起改） |
 | LINE 官方帳號 | `office.lineUrl`（目前留空；填入即自動顯示） |
 
-### 放照片
-1. 照片放 `public/images/`，例如 `hou.jpg`。
-2. `site.ts` 把 `lawyer.photo: ''` 改成 `'hou.jpg'`。
-3. 建議直式 4:5、短邊 800px 以上。留空會顯示「照片預留位置」，不破版。
+### 照片（已放，2026-09-07）
+
+站上用的兩張圖都是從原檔 `侯律師照片.jpg`（2000×1334 橫幅，事務所書櫃前）產生的：
+
+| 檔案 | 尺寸 | 用在哪 |
+|---|---|---|
+| `public/images/hou-portrait.jpg` | 1040×1300（4:5 直幅） | 首頁「關於」區、`/profile/` 頁首 |
+| `public/images/og.jpg` | 1200×630 | 分享到 LINE／Facebook 時的預覽圖 |
+
+**要換照片或改裁切**：把新原檔放成 `侯律師照片.jpg`，或改
+`scripts/make-photos.py` 最上面的 `CROP_H`（越小＝裁越緊）與 `CENTER_X`，然後
+
+```
+python3 scripts/make-photos.py
+```
+
+會直接覆寫 `public/images/` 兩張圖。需要 Pillow（`pip3 install Pillow`）。
+`site.ts` 的 `lawyer.photo` 留空的話會回到「照片預留位置」，不破版。
 
 ## ⚠️ 改文案前務必先讀
 
@@ -54,7 +68,11 @@ npm run preview
 
 ## 提交給搜尋引擎（第一次上線後做一次）
 
-目前搜「事務所名稱」還找不到本站，要主動提交。兩個平台都做，各約 5 分鐘。
+**Google Search Console 已於 2026-09-07 做完**：資源已建立、擁有權已驗證
+（驗證碼在 `site.ts` 的 `siteVerification.google`，**不要刪**，刪了會掉驗證）、
+`sitemap-index.xml` 已提交、五頁都已送出建立索引要求。首頁已編入索引。
+Sitemap 報表若顯示「無法擷取」是剛提交時的常態，用「網址審查 → 測試線上網址」
+即時測試才準。**Bing 還沒做**，下面的步驟留著備查與日後重做用。
 
 ### Google Search Console
 1. 開 <https://search.google.com/search-console>，用 Google 帳號登入。

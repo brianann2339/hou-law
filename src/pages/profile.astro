@@ -41,7 +41,7 @@ const personLd = {
       </div>
       <div class="profile-hero__portrait">
         {photoSrc
-          ? <img src={photoSrc} alt={`${lawyer.name}律師`} width="520" height="650" />
+          ? <img src={photoSrc} alt={`${lawyer.name}律師`} width="1040" height="1300" fetchpriority="high" decoding="async" />
           : <div class="portrait-placeholder" aria-hidden="true"><span>{lawyer.name}</span><small>照片預留位置</small></div>}
       </div>
     </div>
@@ -158,7 +158,11 @@ const personLd = {
     color: rgba(247, 244, 237, 0.55); max-width: 30em;
   }
   .profile-hero__portrait { max-width: 320px; }
-  .profile-hero__portrait img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+  .profile-hero__portrait img {
+    /* height:auto 不可省——理由同 index.astro。 */
+    width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover;
+    border: 1px solid rgba(201, 168, 112, 0.3);
+  }
   .portrait-placeholder {
     aspect-ratio: 4 / 5;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
