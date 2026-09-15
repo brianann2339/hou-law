@@ -74,7 +74,6 @@ def main():
     d.line([(88, 214), (144, 214)], fill=GOLD, width=2)
     tracked(d, (88, 258), '侯明正律師', font(76, True), CREAM, 10)
     tracked(d, (88, 382), '侯明正律師事務所', font(30), (200, 206, 201), 5)
-    tracked(d, (88, 452), '初次諮詢不收費 · 可電話或視訊', font(24), (168, 180, 172), 4)
     card.convert('RGB').save(os.path.join(OUT, 'og.jpg'), quality=88, optimize=True, progressive=True)
     print('寫出 hou-portrait.jpg 與 og.jpg 到', OUT)
 

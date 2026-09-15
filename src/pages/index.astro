@@ -8,7 +8,7 @@ const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
 
 <Base
   title="臺南律師"
-  description={`${firm.name}，位於臺南市中西區府前路一段188號。${lawyer.name}律師曾任臺東、臺南地方法院法官與庭長，以及臺灣高等法院臺南分院法官，審判工作三十四年。初次諮詢不收費，可電話或視訊。`}
+  description={`${firm.name}，位於臺南市中西區府前路一段188號。${lawyer.name}律師曾任臺東、臺南地方法院法官與庭長，以及臺灣高等法院臺南分院法官，審判工作三十四年。`}
   current="home"
 >
   <section class="hero">
@@ -20,7 +20,6 @@ const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
       <p class="hero__lede">{lawyer.tagline}</p>
       <p class="hero__intro">{lawyer.heroIntro}</p>
       <p class="hero__areas"><span>專長範疇</span>{lawyer.featuredAreas.join('｜')}</p>
-      <p class="hero__consult-note">初次諮詢不收費・電話／視訊亦可</p>
       <div class="hero__actions">
         <a class="btn btn--onDeep" href={telHref(lawyer.tel)}>致電 {lawyer.tel}</a>
         <a class="btn btn--onDeep" href={`mailto:${lawyer.email}`}>預約面談或來信</a>
@@ -28,7 +27,6 @@ const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
       <dl class="hero__meta">
         <div><dt>地址</dt><dd>{office.addressFull}</dd></div>
         <div><dt>服務時間</dt><dd>{office.hours}</dd></div>
-        <div><dt>初次諮詢</dt><dd>不收費，可電話或視訊</dd></div>
       </dl>
     </div>
   </section>

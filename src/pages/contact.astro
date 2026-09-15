@@ -9,7 +9,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
 <Base
   title="聯絡與交通"
-  description={`${firm.name} ${lawyer.tel}。地址：${office.addressFull}。服務時間 ${office.hours}。初次諮詢不收費，可電話或視訊。`}
+  description={`${firm.name} ${lawyer.tel}。地址：${office.addressFull}。服務時間 ${office.hours}。請先來電或來信聯繫。`}
   current="contact"
 >
   <section class="page-hero">
@@ -17,7 +17,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
       <p class="hero__eyebrow">Contact</p>
       <h1 class="page-hero__title">聯絡與交通</h1>
       <p class="page-hero__lede">
-        初次諮詢不收費，電話上也可以先談。開庭日律師可能不在事務所，來訪前建議先來電。
+        請先來電或來信聯繫。開庭日律師可能不在事務所，來訪前建議先來電。
       </p>
     </div>
   </section>
@@ -33,8 +33,6 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           <div><dt>電子郵件</dt><dd><a href={`mailto:${lawyer.email}`}>{lawyer.email}</a></dd></div>
           <div><dt>地址</dt><dd>{office.addressFull}</dd></div>
           <div><dt>服務時間</dt><dd>{office.hours}</dd></div>
-          <div><dt>初次諮詢</dt><dd>不收費，可來所面談、電話或視訊</dd></div>
-          <div><dt>視訊工具</dt><dd>{office.videoTools.join('／')}</dd></div>
           <div><dt>語言</dt><dd>{lawyer.languages.join('、')}</dd></div>
           <div><dt>律師證書</dt><dd>{lawyer.licenseNo}</dd></div>
         </dl>
@@ -51,8 +49,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <h3>來電之前</h3>
         <ul>
           <li>{office.callback}</li>
-          <li>初次諮詢不收費；委任後的律師酬金採收費制，面談時說明並於委任契約載明。</li>
-          <li>視訊諮詢請先來電或來信約時間，建議在安靜、不會被他人聽到的地方連線；本所不會錄影或錄音，如有需要會事先徵得您的同意。</li>
+          <li>委任相關費用與計算方式會於面談時說明，並於委任契約載明。</li>
           <li>初次來訪建議先來電確認律師在所——開庭日律師可能不在事務所，直接前來不一定見得到人。</li>
         </ul>
       </div>
