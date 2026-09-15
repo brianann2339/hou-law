@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { telHref } from '../lib/paths';
-import { firm, lawyer, office, peer } from '../content/site';
+import { firm, lawyer, office, peer, coOffice } from '../content/site';
 
 const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(office.mapQuery)}&output=embed&hl=zh-TW`;
 const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.mapQuery)}`;
@@ -58,9 +58,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
       </div>
 
       <p class="notice" style="margin-top:2.6rem">
-        {office.disclaimer}
-        若您的問題屬於{peer.areas}，也可以直接聯繫
-        <a href={peer.url}>{peer.firmName}</a>。
+        {coOffice.contactLead}<a href={peer.url}>{peer.firmName}</a>。
       </p>
     </div>
   </section>

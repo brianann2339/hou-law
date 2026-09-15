@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { u, telHref } from '../lib/paths';
-import { firm, lawyer, office, peer } from '../content/site';
+import { firm, lawyer, office, peer, coOffice } from '../content/site';
 
 const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
 
@@ -21,7 +21,7 @@ const personLd = {
 
 <Base
   title={`${lawyer.name}律師`}
-  description={`${firm.name}｜${lawyer.name}律師，${lawyer.bar}會員，律師證書字號${lawyer.licenseNo}。曾任臺灣臺東地方法院、臺灣臺南地方法院法官與庭長、臺灣高等法院臺南分院法官，審判工作三十四年。`}
+  description={`${firm.name}｜${lawyer.name}律師，畢業於國立臺灣大學法律學系，自民國79年起投身司法審判工作達三十四年，歷任臺東、臺南地方法院法官與庭長，以及臺灣高等法院臺南分院法官，於民國113年轉任律師。`}
   current="profile"
   jsonLd={personLd}
 >
@@ -51,9 +51,12 @@ const personLd = {
     <div class="wrap profile-grid">
       <div>
         <p class="eyebrow">Profile</p>
-        <h2 class="section-title">關於{lawyer.name}律師</h2>
+        <h2 class="section-title">從審判核心，看透案件攻防的關鍵</h2>
         <div class="rule"></div>
         {lawyer.intro.map((p) => <p class="profile-para">{p}</p>)}
+
+        <h3 class="sub-h">執業理念</h3>
+        {lawyer.philosophy.map((p) => <p class="profile-para">{p}</p>)}
 
         <h3 class="sub-h">主要承辦領域</h3>
         <ul class="tags">{lawyer.practiceAreas.map((a) => <li>{a}</li>)}</ul>
@@ -122,9 +125,9 @@ const personLd = {
   <section class="section section--paper2 section--tight">
     <div class="wrap">
       <p class="notice">
-        {office.disclaimer}
-        若您的問題屬於{peer.areas}，也可以直接聯繫
-        <a href={peer.url}>{peer.firmName}</a>。
+        <span>{coOffice.homeIntro}</span>
+        <span>{coOffice.homeHouFocus}</span>
+        <span>{coOffice.homePeerFocus} <a href={peer.url}>前往{peer.firmName}網站 →</a></span>
       </p>
       <p style="margin-top:2rem">
         <a class="btn btn--solid" href={u('/contact/')}>聯絡與交通</a>
@@ -219,4 +222,5 @@ const personLd = {
     border-top: 1px solid var(--line-soft);
     font-size: 0.78rem; color: var(--ink-3); line-height: 1.9;
   }
+  .notice span { display: block; }
 </style>

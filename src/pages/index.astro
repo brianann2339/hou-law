@@ -1,26 +1,29 @@
 ---
 import Base from '../layouts/Base.astro';
 import { u, telHref } from '../lib/paths';
-import { firm, lawyer, office, peer, consultSteps } from '../content/site';
+import { firm, lawyer, office, peer, coOffice, consultSteps } from '../content/site';
 
 const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
 ---
 
 <Base
   title="臺南律師"
-  description={`${firm.name}，位於臺南市中西區府前路一段188號。${lawyer.name}律師曾任臺灣臺東地方法院、臺灣臺南地方法院法官與庭長，審判工作三十四年。初次諮詢不收費，可電話或視訊。`}
+  description={`${firm.name}，位於臺南市中西區府前路一段188號。${lawyer.name}律師曾任臺東、臺南地方法院法官與庭長，以及臺灣高等法院臺南分院法官，審判工作三十四年。初次諮詢不收費，可電話或視訊。`}
   current="home"
 >
   <section class="hero">
     <div class="wrap hero__inner">
       <p class="hero__eyebrow">臺南 · 中西區府前路</p>
-      <h1 class="hero__title" aria-label={`${lawyer.name}律師`}>
-        <span>{lawyer.name}</span><em>律師</em>
+      <h1 class="hero__title" aria-label={firm.name}>
+        <span>{lawyer.name}</span><em>律師事務所</em>
       </h1>
       <p class="hero__lede">{lawyer.tagline}</p>
+      <p class="hero__intro">{lawyer.heroIntro}</p>
+      <p class="hero__areas"><span>專長範疇</span>{lawyer.featuredAreas.join('｜')}</p>
+      <p class="hero__consult-note">初次諮詢不收費・電話／視訊亦可</p>
       <div class="hero__actions">
         <a class="btn btn--onDeep" href={telHref(lawyer.tel)}>致電 {lawyer.tel}</a>
-        <a class="btn btn--onDeep" href={`mailto:${lawyer.email}`}>來信洽詢</a>
+        <a class="btn btn--onDeep" href={`mailto:${lawyer.email}`}>預約面談或來信</a>
       </div>
       <dl class="hero__meta">
         <div><dt>地址</dt><dd>{office.addressFull}</dd></div>
@@ -98,9 +101,9 @@ const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
   <section class="section section--tight">
     <div class="wrap">
       <p class="notice">
-        {office.disclaimer}
-        若您的問題屬於{peer.areas}，也可以直接聯繫
-        <a href={peer.url}>{peer.firmName}</a>。
+        <span>{coOffice.homeIntro}</span>
+        <span>{coOffice.homeHouFocus}</span>
+        <span>{coOffice.homePeerFocus} <a href={peer.url}>前往{peer.firmName}網站 →</a></span>
       </p>
     </div>
   </section>
@@ -141,8 +144,32 @@ const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
   .hero__lede {
     color: rgba(247, 244, 237, 0.82);
     max-width: 34em;
-    margin-bottom: 2.6rem;
+    margin-bottom: 1.1rem;
     font-size: 1.05rem;
+  }
+  .hero__intro {
+    color: rgba(247, 244, 237, 0.78);
+    max-width: 48em;
+    margin-bottom: 1rem;
+    font-size: 0.98rem;
+    white-space: pre-line;
+  }
+  .hero__areas {
+    color: rgba(247, 244, 237, 0.88);
+    max-width: 52em;
+    margin-bottom: 1.6rem;
+    font-size: 0.88rem;
+  }
+  .hero__areas span {
+    color: var(--accent-soft);
+    letter-spacing: 0.16em;
+    margin-right: 0.8rem;
+  }
+  .hero__consult-note {
+    color: var(--accent-soft);
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.9rem;
   }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.2rem; }
   .hero__meta {
@@ -190,4 +217,5 @@ const photoSrc = lawyer.photo ? u(`/images/${lawyer.photo}`) : '';
   .contact-strip { display: grid; gap: 2.4rem; align-items: end; }
   .contact-strip__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
   @media (min-width: 900px) { .contact-strip { grid-template-columns: 1.4fr 1fr; } }
+  .notice span { display: block; }
 </style>

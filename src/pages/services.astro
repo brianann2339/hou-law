@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { u, telHref } from '../lib/paths';
-import { firm, lawyer, office, peer, serviceGroups } from '../content/site';
+import { firm, lawyer, office, peer, coOffice, serviceGroups } from '../content/site';
 ---
 
 <Base
@@ -43,15 +43,35 @@ import { firm, lawyer, office, peer, serviceGroups } from '../content/site';
   </section>
 
   <section class="section section--paper2">
+    <div class="wrap co-office">
+      <p class="eyebrow">Separate practices</p>
+      <h2 class="section-title">{coOffice.title}</h2>
+      <div class="rule"></div>
+      <p class="lede co-office__intro">{coOffice.intro}</p>
+      <div class="co-office__roles">
+        {coOffice.roles.map((role) => (
+          <div class="co-office__role">
+            <h3>{role.name}</h3>
+            <p>{role.description}</p>
+          </div>
+        ))}
+      </div>
+      <p class="lede co-office__note">{coOffice.note}</p>
+      <p class="notice co-office__notice">{office.disclaimer}</p>
+    </div>
+  </section>
+
+  <section class="section section--paper2">
     <div class="wrap">
       <p class="eyebrow">Not listed?</p>
       <h2 class="section-title">沒有列到您的問題？</h2>
       <div class="rule"></div>
       <p class="lede">
-        以上是{lawyer.name}律師主要承辦的類型，不是全部。法律問題常常一開始看起來像 A、談過才發現是 B——初次諮詢不收費，先講講看再說。
+        {coOffice.servicesSummary}
       </p>
       <p class="lede" style="margin-top:1rem">
-        若您的問題屬於<strong>{peer.areas}</strong>，合署的<a href={peer.url}>{peer.firmName}</a>是更合適的窗口。{office.disclaimer}
+        若您的案件屬於<strong>{peer.areas}</strong>等領域，同址合署的
+        <a href={peer.url}>{peer.firmName}</a>亦有對應專長，歡迎依案件性質評估聯繫。兩所各自獨立受理委任、各盡其責，為您提供更完整的法律支援。
       </p>
       <div class="cta-row">
         <a class="btn btn--solid" href={telHref(lawyer.tel)}>致電 {lawyer.tel}</a>
@@ -92,4 +112,27 @@ import { firm, lawyer, office, peer, serviceGroups } from '../content/site';
   .plain { font-size: 0.88rem; color: var(--ink-3); line-height: 1.75; }
 
   .cta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+
+  .co-office__intro { max-width: 48em; }
+  .co-office__roles {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 720px) {
+    .co-office__roles { grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
+  }
+  .co-office__role {
+    border-top: 2px solid var(--accent);
+    padding: 1.1rem 1.2rem 1.2rem;
+    background: rgba(156, 116, 64, 0.05);
+  }
+  .co-office__role h3 {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.45rem;
+  }
+  .co-office__role p { color: var(--ink-2); font-size: 0.92rem; margin: 0; }
+  .co-office__note { margin-top: 1.6rem; }
+  .co-office__notice { margin-top: 1.6rem; }
 </style>
